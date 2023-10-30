@@ -1,0 +1,1 @@
+pyinstaller --windowed Muse_FB-Page_Multi-Post.py --paths ./utils

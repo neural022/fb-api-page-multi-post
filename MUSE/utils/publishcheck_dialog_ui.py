@@ -69,31 +69,31 @@ class PublishCheckDialog(QtWidgets.QDialog, Ui_PublishCheckDialog):
         self.accept()
 
     def publish_post(self, target_page_ids, managed_pages, post_text=None, post_image=None):
-            try:
-                for page_data in managed_pages:
-                    if page_data['id'] in target_page_ids:
-                        page = FacebookPageAPI(page_data['access_token'], api_version=self.api_version)
+        try:
+            for page_data in managed_pages:
+                if page_data['id'] in target_page_ids:
+                    page = FacebookPageAPI(page_data['access_token'], api_version=self.api_version)
 
-                        if self.post_text_only:
-                            # 純發文字
-                            page.post(message=post_text)
-                            self.logger.info(f"Posted to page {page_data['name']} successfully!")
-                        elif self.post_image_only:
-                            # 純發圖片
-                            page.upload_image(post_image, publish=True)
-                            self.logger.info(f"Posted to page {page_data['name']} successfully!")
-                        elif self.post_both:
-                            # 圖片加文字
-                            attached_media = page.upload_image(post_image, publish=False)
-                            page.post(message=post_text, attached_media=attached_media)
-                            self.logger.info(f"Posted to page {page_data['name']} successfully!")
-                        else:
-                            self.logger.info(f"Posted to page failed. Content is empty！")
+                    if self.post_text_only:
+                        # 純發文字
+                        page.post(message=post_text)
+                        self.logger.info(f"Posted to page {page_data['name']} successfully!")
+                    elif self.post_image_only:
+                        # 純發圖片
+                        page.upload_image(post_image, publish=True)
+                        self.logger.info(f"Posted to page {page_data['name']} successfully!")
+                    elif self.post_both:
+                        # 圖片加文字
+                        attached_media = page.upload_image(post_image, publish=False)
+                        page.post(message=post_text, attached_media=attached_media)
+                        self.logger.info(f"Posted to page {page_data['name']} successfully!")
+                    else:
+                        self.logger.info(f"Posted to page failed. Content is empty！")
 
-            except FacebookError as e:
-                self.logger.error(f"Error occurred while interacting with Facebook: {e}")
-            except FileNotFoundError:
-                self.logger.error(f"Error: Specified image path not found.")
+        except FacebookError as e:
+            self.logger.error(f"Error occurred while interacting with Facebook: {e}")
+        except FileNotFoundError:
+            self.logger.error(f"Error: Specified image path not found.")
 
     def cancel_post(self):
         self.close()

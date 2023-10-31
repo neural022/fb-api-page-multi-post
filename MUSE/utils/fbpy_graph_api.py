@@ -27,8 +27,8 @@ class FacebookUserAPI():
             
 
 class FacebookPageAPI():
-    def __init__(self, access_token):
-        self.graph_api = GraphAPI(access_token)
+    def __init__(self, access_token, api_version="18.0"):
+        self.graph_api = GraphAPI(access_token, version=api_version)
 
     def upload_image(self, image_path, publish=False):
         """

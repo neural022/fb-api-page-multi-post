@@ -78,7 +78,7 @@ def determine_post_type(post_text, post_image):
     return has_text, has_image
 
 def get_long_lived_token(app_id, app_secret, short_lived_token, api_version="18.0"):
-    graph = GraphAPI(oauth_token=short_lived_token, version=version)
+    graph = GraphAPI(oauth_token=short_lived_token, version=api_version)
     path = f"oauth/access_token?grant_type=fb_exchange_token&client_id={app_id}&client_secret={app_secret}&fb_exchange_token={short_lived_token}"
     response = graph.get(path)
     return response.get('access_token')
